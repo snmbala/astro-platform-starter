@@ -1,5 +1,4 @@
-import { ContentfulContentSource } from '@stackbit/cms-contentful';
-
+import { GitContentSource } from '@stackbit/cms-git';
 import { defineStackbitConfig } from '@stackbit/types';
 
 export default defineStackbitConfig({
@@ -7,12 +6,17 @@ export default defineStackbitConfig({
     "nodeVersion": "18",
     "ssgName": "custom",
     "contentSources": [
-        new ContentfulContentSource({
-            spaceId: process.env.CONTENTFUL_SPACE_ID!,
-            environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
-            previewToken: process.env.CONTENTFUL_PREVIEW_TOKEN!,
-            accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN!
-        }),
+        new GitContentSource({
+            rootPath: '.',
+            contentDirs: ['content'],
+            models: [],
+            assetsConfig: {
+                referenceType: 'static',
+                staticDir: 'public',
+                uploadDir: 'images',
+                publicPath: '/images/'
+            }
+        })
     ],
-    "postInstallCommand": "npm i --no-save @stackbit/types @stackbit/cms-contentful"
+    "postInstallCommand": "npm i --no-save @stackbit/types @stackbit/cms-git"
 })
