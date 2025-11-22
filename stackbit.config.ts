@@ -9,7 +9,52 @@ export default defineStackbitConfig({
         new GitContentSource({
             rootPath: '.',
             contentDirs: ['content'],
-            models: [],
+            models: [
+                {
+                    name: 'BlogPost',
+                    type: 'page',
+                    urlPath: '/blog/{slug}',
+                    filePath: 'content/blog/{slug}.md',
+                    fields: [
+                        {
+                            name: 'title',
+                            type: 'string',
+                            required: true,
+                            label: 'Title'
+                        },
+                        {
+                            name: 'description',
+                            type: 'text',
+                            label: 'Description'
+                        },
+                        {
+                            name: 'publishDate',
+                            type: 'date',
+                            required: true,
+                            label: 'Publish Date'
+                        },
+                        {
+                            name: 'author',
+                            type: 'string',
+                            label: 'Author'
+                        },
+                        {
+                            name: 'tags',
+                            type: 'list',
+                            items: {
+                                type: 'string'
+                            },
+                            label: 'Tags'
+                        },
+                        {
+                            name: 'draft',
+                            type: 'boolean',
+                            label: 'Draft',
+                            default: false
+                        }
+                    ]
+                }
+            ],
             assetsConfig: {
                 referenceType: 'static',
                 staticDir: 'public',

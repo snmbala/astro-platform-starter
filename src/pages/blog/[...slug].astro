@@ -9,22 +9,25 @@ export const getStaticPaths = (() => {
         const slug = path.split('/').pop()?.replace('.md', '') || '';
         return {
             params: { slug },
-            props: { post: mod }
+            props: { 
+                post: mod,
+                contentPath: path.replace('/content/', 'content/')
+            }
         };
     });
 }) satisfies GetStaticPaths;
 
-const { post } = Astro.props;
+const { post, contentPath } = Astro.props;
 const { Content, frontmatter } = post;
 ---
 
 <Layout title={frontmatter.title}>
-    <article class="max-w-3xl mx-auto px-4 py-12">
+    <article class="max-w-3xl mx-auto px-4 py-12" data-sb-object-id={contentPath}>
         <header class="mb-8">
-            <h1 class="text-4xl font-bold mb-4">{frontmatter.title}</h1>
+            <h1 class="text-4xl font-bold mb-4" data-sb-field-path="title">{frontmatter.title}</h1>
 
             <div class="text-gray-600 mb-4">
-                <time datetime={frontmatter.publishDate}>
+                <time datetime={frontmatter.publishDate} data-sb-field-path="publishDate">
                     {
                         new Date(frontmatter.publishDate).toLocaleDateString('en-US', {
                             year: 'numeric',
@@ -33,12 +36,12 @@ const { Content, frontmatter } = post;
                         })
                     }
                 </time>
-                {frontmatter.author && <span> • {frontmatter.author}</span>}
+                {frontmatter.author && <span data-sb-field-path="author"> • {frontmatter.author}</span>}
             </div>
 
             {
                 frontmatter.tags && (
-                    <div class="flex gap-2 mb-6">
+                    <div class="flex gap-2 mb-6" data-sb-field-path="tags">
                         {frontmatter.tags.map((tag: string) => (
                             <span class="text-sm bg-gray-200 px-3 py-1 rounded">{tag}</span>
                         ))}
@@ -46,7 +49,7 @@ const { Content, frontmatter } = post;
                 )
             }
 
-            {frontmatter.description && <p class="text-xl text-gray-700 border-l-4 border-blue-500 pl-4 italic">{frontmatter.description}</p>}
+            {frontmatter.description && <p class="text-xl text-gray-700 border-l-4 border-blue-500 pl-4 italic" data-sb-field-path="description">{frontmatter.description}</p>}
         </header>
 
         <div class="prose prose-lg max-w-none">
