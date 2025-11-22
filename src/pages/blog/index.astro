@@ -29,6 +29,16 @@ const sortedPosts = posts
             {
                 sortedPosts.map((post) => (
                     <article class="border-b border-gray-200 pb-8" data-sb-object-id={post.file.replace('/content/', 'content/')}>
+                        {post.frontmatter.coverImage && (
+                            <a href={post.url} class="block mb-4" data-sb-field-path="coverImage">
+                                <img 
+                                    src={post.frontmatter.coverImage} 
+                                    alt={post.frontmatter.title}
+                                    class="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                                />
+                            </a>
+                        )}
+                        
                         <h2 class="text-2xl font-bold mb-2">
                             <a href={post.url} class="hover:text-blue-600" data-sb-field-path="title">
                                 {post.frontmatter.title}
@@ -46,7 +56,11 @@ const sortedPosts = posts
                             {post.frontmatter.author && <span data-sb-field-path="author"> • {post.frontmatter.author}</span>}
                         </div>
 
-                        {post.frontmatter.description && <p class="text-gray-700 mb-3" data-sb-field-path="description">{post.frontmatter.description}</p>}
+                        {post.frontmatter.description && (
+                            <p class="text-gray-700 mb-3" data-sb-field-path="description">
+                                {post.frontmatter.description}
+                            </p>
+                        )}
 
                         {post.frontmatter.tags && (
                             <div class="flex gap-2" data-sb-field-path="tags">

@@ -1,6 +1,7 @@
 ---
 title: "Getting Started with Astro and Netlify"
 description: "Learn how to build fast, modern websites with Astro and deploy them on Netlify"
+coverImage: "/images/astro-cover.jpg"
 publishDate: 2025-11-22
 author: "Bala"
 tags: ["astro", "netlify", "web-development"]

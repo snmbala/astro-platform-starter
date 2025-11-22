@@ -28,6 +28,12 @@ export default defineStackbitConfig({
                             label: 'Description'
                         },
                         {
+                            name: 'coverImage',
+                            type: 'image',
+                            label: 'Cover Image',
+                            description: 'Upload a cover image for this blog post'
+                        },
+                        {
                             name: 'publishDate',
                             type: 'date',
                             required: true,
@@ -53,11 +59,135 @@ export default defineStackbitConfig({
                             default: false
                         },
                         {
-                            name: 'markdown_content',
+                            name: 'content',
+                            type: 'list',
+                            label: 'Content Blocks',
+                            items: {
+                                type: 'model',
+                                models: ['TextBlock', 'ImageBlock', 'HeadingBlock', 'QuoteBlock', 'ListBlock']
+                            }
+                        }
+                    ]
+                },
+                {
+                    name: 'TextBlock',
+                    type: 'object',
+                    label: 'Paragraph',
+                    fields: [
+                        {
+                            name: 'type',
+                            type: 'string',
+                            const: 'text',
+                            default: 'text'
+                        },
+                        {
+                            name: 'text',
                             type: 'markdown',
-                            label: 'Content',
-                            required: false,
-                            description: 'The main content of the blog post'
+                            label: 'Text'
+                        }
+                    ]
+                },
+                {
+                    name: 'HeadingBlock',
+                    type: 'object',
+                    label: 'Heading',
+                    fields: [
+                        {
+                            name: 'type',
+                            type: 'string',
+                            const: 'heading',
+                            default: 'heading'
+                        },
+                        {
+                            name: 'level',
+                            type: 'enum',
+                            options: ['h2', 'h3', 'h4'],
+                            default: 'h2',
+                            label: 'Heading Level'
+                        },
+                        {
+                            name: 'text',
+                            type: 'string',
+                            label: 'Heading Text'
+                        }
+                    ]
+                },
+                {
+                    name: 'ImageBlock',
+                    type: 'object',
+                    label: 'Image',
+                    fields: [
+                        {
+                            name: 'type',
+                            type: 'string',
+                            const: 'image',
+                            default: 'image'
+                        },
+                        {
+                            name: 'url',
+                            type: 'image',
+                            label: 'Image'
+                        },
+                        {
+                            name: 'alt',
+                            type: 'string',
+                            label: 'Alt Text'
+                        },
+                        {
+                            name: 'caption',
+                            type: 'string',
+                            label: 'Caption'
+                        }
+                    ]
+                },
+                {
+                    name: 'QuoteBlock',
+                    type: 'object',
+                    label: 'Quote',
+                    fields: [
+                        {
+                            name: 'type',
+                            type: 'string',
+                            const: 'quote',
+                            default: 'quote'
+                        },
+                        {
+                            name: 'text',
+                            type: 'text',
+                            label: 'Quote Text'
+                        },
+                        {
+                            name: 'author',
+                            type: 'string',
+                            label: 'Author'
+                        }
+                    ]
+                },
+                {
+                    name: 'ListBlock',
+                    type: 'object',
+                    label: 'List',
+                    fields: [
+                        {
+                            name: 'type',
+                            type: 'string',
+                            const: 'list',
+                            default: 'list'
+                        },
+                        {
+                            name: 'style',
+                            type: 'enum',
+                            options: ['bullet', 'numbered'],
+                            default: 'bullet',
+                            label: 'List Style'
+                        },
+                        {
+                            name: 'items',
+                            type: 'list',
+                            label: 'Items',
+                            items: {
+                                type: 'string'
+                            }
                         }
                     ]
                 }
