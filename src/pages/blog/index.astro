@@ -31,14 +31,14 @@ const sortedPosts = posts
                     <article class="border-b border-gray-200 pb-8" data-sb-object-id={post.file.replace('/content/', 'content/')}>
                         {post.frontmatter.coverImage && (
                             <a href={post.url} class="block mb-4" data-sb-field-path="coverImage">
-                                <img 
-                                    src={post.frontmatter.coverImage} 
+                                <img
+                                    src={post.frontmatter.coverImage}
                                     alt={post.frontmatter.title}
                                     class="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow"
                                 />
                             </a>
                         )}
-                        
+
                         <h2 class="text-2xl font-bold mb-2">
                             <a href={post.url} class="hover:text-blue-600" data-sb-field-path="title">
                                 {post.frontmatter.title}

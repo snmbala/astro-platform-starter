@@ -26,16 +26,14 @@ const hasContentBlocks = frontmatter.content && Array.isArray(frontmatter.conten
 
 <Layout title={frontmatter.title}>
     <article class="max-w-3xl mx-auto px-4 py-12" data-sb-object-id={contentPath}>
-        {frontmatter.coverImage && (
-            <div class="mb-8 -mx-4 sm:mx-0" data-sb-field-path="coverImage">
-                <img 
-                    src={frontmatter.coverImage} 
-                    alt={frontmatter.title}
-                    class="w-full h-64 sm:h-96 object-cover sm:rounded-lg shadow-lg"
-                />
-            </div>
-        )}
-        
+        {
+            frontmatter.coverImage && (
+                <div class="mb-8 -mx-4 sm:mx-0" data-sb-field-path="coverImage">
+                    <img src={frontmatter.coverImage} alt={frontmatter.title} class="w-full h-64 sm:h-96 object-cover sm:rounded-lg shadow-lg" />
+                </div>
+            )
+        }
+
         <header class="mb-8">
             <h1 class="text-4xl font-bold mb-4" data-sb-field-path="title">{frontmatter.title}</h1>
 
@@ -71,64 +69,67 @@ const hasContentBlocks = frontmatter.content && Array.isArray(frontmatter.conten
             }
         </header>
 
-        {hasContentBlocks ? (
-            <div class="content-blocks" data-sb-field-path="content">
-                {frontmatter.content.map((block: any, index: number) => {
-                    if (block.type === 'heading') {
-                        const Tag = block.level || 'h2';
-                        return (
-                            <Tag class={`font-bold mt-8 mb-4 ${block.level === 'h2' ? 'text-3xl' : block.level === 'h3' ? 'text-2xl' : 'text-xl'}`} data-sb-field-path={`.${index}.text`}>
-                                {block.text}
-                            </Tag>
-                        );
-                    } else if (block.type === 'text') {
-                        return (
-                            <div class="prose-block mb-4" data-sb-field-path={`.${index}.text`} set:html={block.text} />
-                        );
-                    } else if (block.type === 'image') {
-                        return (
-                            <figure class="my-6" data-sb-field-path={`.${index}`}>
-                                <img 
-                                    src={block.url} 
-                                    alt={block.alt || ''}
-                                    class="w-full rounded-lg shadow-md"
-                                    data-sb-field-path={`.${index}.url`}
-                                />
-                                {block.caption && (
-                                    <figcaption class="text-center text-sm text-gray-600 mt-2" data-sb-field-path={`.${index}.caption`}>
-                                        {block.caption}
-                                    </figcaption>
-                                )}
-                            </figure>
-                        );
-                    } else if (block.type === 'quote') {
-                        return (
-                            <blockquote class="border-l-4 border-blue-500 pl-4 italic my-6 text-gray-700" data-sb-field-path={`.${index}`}>
-                                <p data-sb-field-path={`.${index}.text`}>{block.text}</p>
-                                {block.author && (
-                                    <cite class="block mt-2 text-sm not-italic" data-sb-field-path={`.${index}.author`}>
-                                        — {block.author}
-                                    </cite>
-                                )}
-                            </blockquote>
-                        );
-                    } else if (block.type === 'list') {
-                        const ListTag = block.style === 'numbered' ? 'ol' : 'ul';
-                        return (
-                            <ListTag class={`mb-4 ${block.style === 'numbered' ? 'list-decimal' : 'list-disc'} pl-6`} data-sb-field-path={`.${index}.items`}>
-                                {block.items?.map((item: string, i: number) => (
-                                    <li class="mb-2" data-sb-field-path={`.${index}.items.${i}`}>{item}</li>
-                                ))}
-                            </ListTag>
-                        );
-                    }
-                })}
-            </div>
-        ) : (
-            <div class="prose prose-lg max-w-none" data-sb-field-path=".">
-                <Content />
-            </div>
-        )}
+        {
+            hasContentBlocks ? (
+                <div class="content-blocks" data-sb-field-path="content">
+                    {frontmatter.content.map((block: any, index: number) => {
+                        if (block.type === 'heading') {
+                            const Tag = block.level || 'h2';
+                            return (
+                                <Tag
+                                    class={`font-bold mt-8 mb-4 ${block.level === 'h2' ? 'text-3xl' : block.level === 'h3' ? 'text-2xl' : 'text-xl'}`}
+                                    data-sb-field-path={`.${index}.text`}
+                                >
+                                    {block.text}
+                                </Tag>
+                            );
+                        } else if (block.type === 'text') {
+                            return <div class="prose-block mb-4" data-sb-field-path={`.${index}.text`} set:html={block.text} />;
+                        } else if (block.type === 'image') {
+                            return (
+                                <figure class="my-6" data-sb-field-path={`.${index}`}>
+                                    <img src={block.url} alt={block.alt || ''} class="w-full rounded-lg shadow-md" data-sb-field-path={`.${index}.url`} />
+                                    {block.caption && (
+                                        <figcaption class="text-center text-sm text-gray-600 mt-2" data-sb-field-path={`.${index}.caption`}>
+                                            {block.caption}
+                                        </figcaption>
+                                    )}
+                                </figure>
+                            );
+                        } else if (block.type === 'quote') {
+                            return (
+                                <blockquote class="border-l-4 border-blue-500 pl-4 italic my-6 text-gray-700" data-sb-field-path={`.${index}`}>
+                                    <p data-sb-field-path={`.${index}.text`}>{block.text}</p>
+                                    {block.author && (
+                                        <cite class="block mt-2 text-sm not-italic" data-sb-field-path={`.${index}.author`}>
+                                            — {block.author}
+                                        </cite>
+                                    )}
+                                </blockquote>
+                            );
+                        } else if (block.type === 'list') {
+                            const ListTag = block.style === 'numbered' ? 'ol' : 'ul';
+                            return (
+                                <ListTag
+                                    class={`mb-4 ${block.style === 'numbered' ? 'list-decimal' : 'list-disc'} pl-6`}
+                                    data-sb-field-path={`.${index}.items`}
+                                >
+                                    {block.items?.map((item: string, i: number) => (
+                                        <li class="mb-2" data-sb-field-path={`.${index}.items.${i}`}>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ListTag>
+                            );
+                        }
+                    })}
+                </div>
+            ) : (
+                <div class="prose prose-lg max-w-none" data-sb-field-path=".">
+                    <Content />
+                </div>
+            )
+        }
 
         <footer class="mt-12 pt-8 border-t border-gray-200">
             <a href="/blog" class="text-blue-600 hover:underline"> ← Back to all posts </a>
@@ -138,7 +139,8 @@ const hasContentBlocks = frontmatter.content && Array.isArray(frontmatter.conten
 
 <style>
     /* Enhanced prose styling for better readability */
-    .prose, .prose-block {
+    .prose,
+    .prose-block {
         color: #1f2937;
         line-height: 1.75;
     }
