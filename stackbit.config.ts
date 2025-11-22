@@ -51,6 +51,13 @@ export default defineStackbitConfig({
                             type: 'boolean',
                             label: 'Draft',
                             default: false
+                        },
+                        {
+                            name: 'markdown_content',
+                            type: 'markdown',
+                            label: 'Content',
+                            required: false,
+                            description: 'The main content of the blog post'
                         }
                     ]
                 }

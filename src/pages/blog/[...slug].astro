@@ -9,7 +9,7 @@ export const getStaticPaths = (() => {
         const slug = path.split('/').pop()?.replace('.md', '') || '';
         return {
             params: { slug },
-            props: { 
+            props: {
                 post: mod,
                 contentPath: path.replace('/content/', 'content/')
             }
@@ -49,10 +49,16 @@ const { Content, frontmatter } = post;
                 )
             }
 
-            {frontmatter.description && <p class="text-xl text-gray-700 border-l-4 border-blue-500 pl-4 italic" data-sb-field-path="description">{frontmatter.description}</p>}
+            {
+                frontmatter.description && (
+                    <p class="text-xl text-gray-700 border-l-4 border-blue-500 pl-4 italic" data-sb-field-path="description">
+                        {frontmatter.description}
+                    </p>
+                )
+            }
         </header>
 
-        <div class="prose prose-lg max-w-none">
+        <div class="prose prose-lg max-w-none" data-sb-field-path=".">
             <Content />
         </div>
 
@@ -61,3 +67,82 @@ const { Content, frontmatter } = post;
         </footer>
     </article>
 </Layout>
+
+<style>
+    /* Enhanced prose styling for better readability */
+    .prose {
+        color: #1f2937;
+    }
+    .prose h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .prose p {
+        margin-bottom: 1rem;
+        line-height: 1.75;
+    }
+    .prose ul, .prose ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+    }
+    .prose li {
+        margin-bottom: 0.5rem;
+    }
+    .prose img {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin: 1.5rem 0;
+        max-width: 100%;
+        height: auto;
+    }
+    .prose strong {
+        font-weight: 700;
+        color: #111827;
+    }
+    .prose em {
+        font-style: italic;
+    }
+    .prose code {
+        background-color: #f3f4f6;
+        padding: 0.125rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        font-family: monospace;
+    }
+    .prose pre {
+        background-color: #111827;
+        color: #f3f4f6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+    }
+    .prose a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+    .prose a:hover {
+        text-decoration: underline;
+    }
+    .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        font-style: italic;
+        margin: 1.5rem 0;
+        color: #4b5563;
+    }
+</style>
